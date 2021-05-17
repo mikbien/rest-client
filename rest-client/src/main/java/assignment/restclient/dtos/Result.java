@@ -14,6 +14,11 @@ public class Result
         return polarity;
     }
 
+    public Double getUnsignedPolarity()
+    {
+        return polarity>=0 ? polarity : polarity*(-1.0);
+    }
+
     public void setPolarity(Double polarity)
     {
         this.polarity = polarity;

@@ -25,10 +25,9 @@ public class GetQuoteService
     public Quote findOne()
     {
         Quote q = new Quote();
-        //return restTemplate.getForObject(resource, Quote.class);
         try
         {
-            return restTemplate.exchange(resource, HttpMethod.GET, new HttpEntity(""), Quote.class).getBody();
+            return restTemplate.getForObject(resource, Quote.class);
         }
         catch(Exception e)
         {
