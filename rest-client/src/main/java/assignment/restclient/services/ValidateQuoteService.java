@@ -38,15 +38,4 @@ public class ValidateQuoteService
         return restTemplate.postForObject(resource, new HttpEntity<>(params, headers) , QuoteScore.class);
     }
 
-    public List<QuoteScore> get(List<Quote> list)
-    {
-        List<QuoteScore> scores = new ArrayList<>();
-
-        for(Quote str : list)
-            scores.add(getOne(str));
-
-        return scores.stream().sorted(Comparator.comparing(e -> e.getResult().getUnsignedPolarity()*(-1)))
-                .collect(Collectors.toList());
-    }
-
 }
