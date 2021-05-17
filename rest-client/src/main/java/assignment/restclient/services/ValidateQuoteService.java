@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ValidateQuoteService
@@ -21,7 +22,9 @@ public class ValidateQuoteService
     @Value("${analyze}")
     private String resource;
 
-    private static HttpHeaders headers;
+    private static final HttpHeaders headers;
+
+    static
     {
        headers = new HttpHeaders();
        headers.setContentType(MediaType.APPLICATION_JSON);
@@ -38,11 +41,12 @@ public class ValidateQuoteService
     public List<QuoteScore> get(List<Quote> list)
     {
         List<QuoteScore> scores = new ArrayList<>();
+
         for(Quote str : list)
-        {
             scores.add(getOne(str));
-        }
-        return scores;
+
+        return scores.stream().sorted(Comparator.comparing(e -> e.getResult().getUnsignedPolarity()*(-1)))
+                .collect(Collectors.toList());
     }
 
 }
