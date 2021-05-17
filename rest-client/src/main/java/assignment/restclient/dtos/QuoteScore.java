@@ -7,7 +7,6 @@ public class QuoteScore
 {
     private Result result;
 
-
     public Result getResult()
     {
         return result;

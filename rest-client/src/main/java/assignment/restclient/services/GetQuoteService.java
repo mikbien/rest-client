@@ -36,15 +36,14 @@ public class GetQuoteService
         }
     }
 
-    /* Collect given amount of quotes from the generator api */
-    public List<Quote> find(int count)
-    {
-        List<Quote> result = new ArrayList<>();
-        if(count >= 5 && count <= 20)
-        {
-            for(int i = 0; i < count; ++i) result.add(findOne());
-            return result;
-        }
-        return null;
-    }
+//    /* Collect given amount of quotes from the generator api */
+//    public List<Quote> find(int count)
+//    {
+//        List<Quote> result = new ArrayList<>();
+//        {
+//            for(int i = 0; i < count; ++i) result.add(findOne());
+//            return result;
+//        }
+//        return null;
+//    }
 }
