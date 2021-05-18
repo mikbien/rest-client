@@ -13,7 +13,7 @@ Application to retrieve given number of quotes from the https://kanye.rest/ api 
 - after succesful build you will find the `.jar` file inside `<YOUR_PATH>/rest-client/build/libs` folder 
 
 ### Run/Deploy
-- to run the app you will need to execute the jar file
+- to run the app you will need to execute the `.jar` file inside `<YOUR_PATH>/rest-client/build/libs` folder usign `java -jar <JAR_NAME>`
 - by default the app will run on `localhost:8080`, it will be accessible from there
 
 ### How to use
