@@ -18,10 +18,9 @@ public class QuoteController
         return "index";
     }
 
-    @GetMapping("{count}")
+    @PostMapping("/post")
     public String getScore(@PathVariable int count, Model model){
         model.addAttribute("quotes", quotesWithScoresService.getResults(count));
-        // Map<String, Double> res = quotesWithScoresService.getResults(count);
-        return "results";
+        return model.getAttribute("quotes") == null ? "results" : "results";
     }
 }

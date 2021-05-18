@@ -5,15 +5,32 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+    <h2>Winners: </h2>
     <table>
         <tr>
-            <td>Quote</td>
+            <td>ID</td>
             <td>Score</td>
+            <td>Quote</td>
         </tr>
-        <tr th:each="entry, count : ${quotes}">
+        <tr th:each="entry, count : ${quotes.getBest()}">
             <td th:text="${count.count}">count</td>
-            <td th:text="${entry.getSentence()}">quote</td>
             <td th:text="${entry.getScore()}">score</td>
+            <td th:text="${entry.getSentence()}">quote</td>
+        </tr>
+    </table>
+    <br>
+    <table>
+        <tr>
+            <td>Positive</td>
+            <td th:text="${quotes.getPositive()}"></td>
+        </tr>
+        <tr>
+            <td>Neutral</td>
+            <td th:text="${quotes.getNeutral()}"></td>
+        </tr>
+        <tr>
+            <td>Negative</td>
+            <td th:text="${quotes.getNegative()}"></td>
         </tr>
     </table>
 
