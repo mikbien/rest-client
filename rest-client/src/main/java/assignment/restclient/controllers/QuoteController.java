@@ -13,6 +13,11 @@ public class QuoteController
     @Autowired
     private QuotesWithScoresService quotesWithScoresService;
 
+    @GetMapping
+    public String home(){
+        return "index";
+    }
+
     @GetMapping("{count}")
     public String getScore(@PathVariable int count, Model model){
         model.addAttribute("quotes", quotesWithScoresService.getResults(count));

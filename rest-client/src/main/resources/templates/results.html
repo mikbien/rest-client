@@ -11,8 +11,8 @@
             <td>Score</td>
         </tr>
         <tr th:each="entry : ${quotes}">
-            <td th:text="${entry.key}">quote</td>
-            <td th:text="${entry.value}">score</td>
+            <td th:text="${entry.getSentence()}">quote</td>
+            <td th:text="${entry.getScore()}">score</td>
         </tr>
     </table>
 
