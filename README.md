@@ -17,7 +17,8 @@ Application to retrieve given number of quotes from the https://kanye.rest/ api 
 - by default the app will run on `localhost:8080`, it will be accessible from there
 
 ### How to use
-- you will be greeted with a simple html form, in which you should insert a value from 5 to 20
+- go to `localhost:8080` (or whichever port you have set in your `application.properties` file)
+- you will be greeted with a simple html form, in which you should insert a value from 5 to 20 (it is customizable though)
 - after sending the requested value, the program will fetch all the necessary data and present it to you
 
 ### Configuration
