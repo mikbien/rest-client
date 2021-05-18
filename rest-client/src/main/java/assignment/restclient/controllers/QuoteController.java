@@ -3,6 +3,7 @@ package assignment.restclient.controllers;
 import assignment.restclient.dtos.Count;
 import assignment.restclient.dtos.Score;
 import assignment.restclient.services.QuotesWithScoresService;
+import assignment.restclient.services.ServiceConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,8 @@ public class QuoteController
 
     @PostMapping("/")
     public String getScore(@ModelAttribute Count count, Model model){
+        if(count.getValue()< ServiceConfig.lowerBound || count.getValue()>ServiceConfig.upperBound)
+            return "number_error";
         model.addAttribute("quotes", quotesWithScoresService.getScores(count.getValue()));
         model.addAttribute("statistics", quotesWithScoresService
                 .getStatistics((List<Score>) model.getAttribute("quotes")));
