@@ -41,13 +41,6 @@ public class ValidateQuoteService
     @Autowired
     private RestTemplate restTemplate;
 
-    @Value("https://sentim-api.herokuapp.com")
-    private String resource;
-
-    @Value("/api/v1/")
-    private String endpoint;
-
-
     private static final HttpHeaders headers;
     private static Logger log;
     private static ObjectMapper mapper;
@@ -75,53 +68,20 @@ public class ValidateQuoteService
 
     public Mono<Score> getOne(Quote quote)
     {
-
-        return Mono.just(getOneSimple(quote));
-//        log.info("@@@@QUOTE:@@@@\n"+quote.getQuote());
-//        return (WebClient.builder()
-//                //.baseUrl(resource)
-//                .build()
-//                .post()
-//                .uri(resource+endpoint)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .accept(MediaType.APPLICATION_JSON)
-//                .body(BodyInserters.fromValue(quote))
-//                .retrieve()
-//                .bodyToMono(QuoteScore.class));
-////                .block();
-//
-//        log.info("@@@@RESULT:@@@@\n"+res);
-//        try
-//        {
-//            return Mono.just(mapper.readValue(res, QuoteScore.class));
-//        }
-//        catch(Exception e)
-//        {
-//            e.printStackTrace();
-//            return null;
-//        }
-
-    }
-
-    public Score getOneSimple(Quote quote)
-    {
         Map<String, String> params = new HashMap<>();
         params.put("text", quote.getQuote());
-        QuoteScore qs = restTemplate.postForObject(resource+endpoint, new HttpEntity<>(params, headers) , QuoteScore.class);
-        return new Score(quote.getQuote(), qs.getResult().getPolarity());
+        QuoteScore qs = restTemplate.postForObject(ServiceConfig.analyze, new HttpEntity<>(params, headers) , QuoteScore.class);
+
+        return Mono.just(new Score(quote.getQuote(), qs.getResult().getPolarity()));
     }
 
-    public List<Score> getScoresSimple(List<Quote> quotes)
-    {
-        List<Score> res = new ArrayList<>();
-        for(int i = 0; i < quotes.size(); ++i)
-        {
-            Score qs = getOneSimple(quotes.get(i));
-            if (!res.contains(qs)) res.add(qs);
-            else i--;
-        }
-        return res;
-    }
+//    public Score getOneSimple(Quote quote)
+//    {
+//        Map<String, String> params = new HashMap<>();
+//        params.put("text", quote.getQuote());
+//        QuoteScore qs = restTemplate.postForObject(resource, new HttpEntity<>(params, headers) , QuoteScore.class);
+//        return new Score(quote.getQuote(), qs.getResult().getPolarity());
+//    }
 }
 
 

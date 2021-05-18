@@ -17,15 +17,9 @@ public class QuotesWithScoresService
     @Autowired ValidateQuoteService validateQuoteService;
     @Autowired GetQuoteService getQuoteService;
 
-    @Value("${lower-bound}")
-    Integer lowerBound;
-
-    @Value("#${upper-bound}")
-    Integer upperBound;
-
     public List<Score> getResults(int count)
     {
-        if(count >= lowerBound && count <= upperBound)
+        if(count >= ServiceConfig.lowerBound && count <= ServiceConfig.upperBound)
         {
             return validateQuoteService.getScores(getQuoteService.find(count));
         }

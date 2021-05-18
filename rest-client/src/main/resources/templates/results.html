@@ -10,7 +10,8 @@
             <td>Quote</td>
             <td>Score</td>
         </tr>
-        <tr th:each="entry : ${quotes}">
+        <tr th:each="entry, count : ${quotes}">
+            <td th:text="${count.count}">count</td>
             <td th:text="${entry.getSentence()}">quote</td>
             <td th:text="${entry.getScore()}">score</td>
         </tr>

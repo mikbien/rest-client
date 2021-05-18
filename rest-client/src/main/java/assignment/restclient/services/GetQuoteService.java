@@ -28,18 +28,18 @@ import java.util.stream.Collectors;
 @Service
 public class GetQuoteService
 {
-    //@Autowired
-    //private RestTemplate restTemplate;
-    private static Logger log = LoggerFactory.getLogger(ValidateQuoteService.class);
+    private final static WebClient client;
+    private final static Logger log;
+    private final static ObjectMapper mapper;
+    
+    static
+    {
+        log = LoggerFactory.getLogger(ValidateQuoteService.class);
+        mapper = new ObjectMapper();
+        client = WebClient.builder().build();
+    }
 
-    private static WebClient client;
-
-    @Value("${quotes}")
-    private static String resource;
-
-    private ExecutorService executor;
-
-    /* Get one quote from the quote generator api */
+    /* Get unique quotes from the quote generator api */
     public List<Quote> find(int count)
     {
         List<Quote> temp = new ArrayList<>();
@@ -47,39 +47,40 @@ public class GetQuoteService
         int size = count;
         do
         {
-            temp = new ArrayList<>(Objects.requireNonNull(Flux.range(1, size)
-                    .parallel()
-                    .runOn(Schedulers.boundedElastic())
-                    .flatMap(e -> this.findOne())
-                    .collectSortedList((e1, e2) -> e1.getQuote().compareTo(e2.getQuote()))
-                    .block()))
-                    .stream()
-                    .distinct()
-                    .collect(Collectors.toList());
-
+            temp = collect(size);
             for(Quote q : temp) if(!res.contains(q)) res.add(q);
-
             size = count - res.size();
 
-        } while(size!=0);
+        } while(size>0);
         return res;
     }
-    /* Collect given amount of quotes from the generator api */
+    
+    /* Collect singe pool of new quotes from the api */
+    public List<Quote> collect(int size)
+    {
+        return new ArrayList<>(Objects.requireNonNull(Flux.range(1, size)
+                .parallel()
+                .runOn(Schedulers.boundedElastic())
+                .flatMap(e -> this.findOne())
+                .collectSortedList((e1, e2) -> e1.getQuote().compareTo(e2.getQuote()))
+                .block()))
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
+    }
+    
+    /* Get one quote from the generator api */
     public Mono<Quote> findOne()
     {
         String res = "";
         try
         {
-             res = WebClient.builder()
-                    .baseUrl("https://api.kanye.rest")
-                    .build()
+             res = client
                     .get()
-                    .uri("/")
+                    .uri(ServiceConfig.quotes)
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
-             //log.info(res);
-             ObjectMapper mapper = new ObjectMapper();
              return Mono.just(mapper.readValue(res, Quote.class));
         }
         catch (Exception e)
