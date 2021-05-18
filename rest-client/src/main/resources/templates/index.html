@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:custom="http://www.w3.org/1999/xhtml">
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <h1>Quote Analysis</h1>
-<form role = form th:action="@{/ + ${count}}">  method="get">
+<form action = "#" th:action="@{/}" th:object="${count}" method="post">
     <fieldset>
         <div>
-            <label>Count: <input type="number", th:field="*{count}", value="Count"></input></label>>
+            <label><input type="text" th:field="*{value}"/></label>
         </div>
-        <button id="count" type="submit">Get</button>
+        <button id="Count" type="submit">Send</button>
     </fieldset>
 </form>
 </body>

@@ -16,6 +16,7 @@ dependencies {
 	implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.1'
 	implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
 	implementation 'org.springframework.boot:spring-boot-starter-web:2.4.3'
+	implementation 'org.webjars:bootstrap:4.0.0-2'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.4.3'
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
 	implementation 'com.google.code.gson:gson:2.8.5'

@@ -5,34 +5,59 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <h2>Winners: </h2>
+<h1>Quote Analysis</h1>
+<form action = "#" th:action="@{/}" th:object="${count}" method="post">
+    <fieldset>
+        <div>
+            <label><input type="text" th:field="*{value}"/></label>
+        </div>
+        <button id="Count" type="submit" th:value="${count}">Send</button>
+    </fieldset>
+</form>
+    <h2>Most Polarizing quote(s): </h2>
     <table>
         <tr>
             <td>ID</td>
             <td>Score</td>
             <td>Quote</td>
         </tr>
-        <tr th:each="entry, count : ${quotes.getBest()}">
+        <tr th:each="entry, count : ${statistics.getBest()}">
             <td th:text="${count.count}">count</td>
             <td th:text="${entry.getScore()}">score</td>
             <td th:text="${entry.getSentence()}">quote</td>
         </tr>
     </table>
     <br>
+    <h3>Statistics</h3>
     <table>
         <tr>
             <td>Positive</td>
-            <td th:text="${quotes.getPositive()}"></td>
+            <td th:text="${statistics.getPositive()}"></td>
         </tr>
         <tr>
             <td>Neutral</td>
-            <td th:text="${quotes.getNeutral()}"></td>
+            <td th:text="${statistics.getNeutral()}"></td>
         </tr>
         <tr>
             <td>Negative</td>
-            <td th:text="${quotes.getNegative()}"></td>
+            <td th:text="${statistics.getNegative()}"></td>
         </tr>
     </table>
+    <h3>All quotes</h3>
+    <table>
+        <tr>
+            <td>Id</td>
+            <td>Score</td>
+            <td>Quote</td>
+        </tr>
+        <tr th:each="entry, count : ${quotes}">
+            <td th:text="${count.count}">count</td>
+            <td th:text="${entry.getScore()}">score</td>
+            <td th:text="${entry.getSentence()}">quote</td>
+        </tr>
+    </table>
+
+
 
 </body>
 </html>

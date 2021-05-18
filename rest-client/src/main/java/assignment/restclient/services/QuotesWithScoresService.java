@@ -14,12 +14,17 @@ public class QuotesWithScoresService
     @Autowired ValidateQuoteService validateQuoteService;
     @Autowired GetQuoteService getQuoteService;
 
-    public Statistics getResults(int count)
+    public List<Score> getScores(int count)
     {
         if(count >= ServiceConfig.lowerBound && count <= ServiceConfig.upperBound)
         {
-            return new Statistics(validateQuoteService.getScores(getQuoteService.find(count)));
+            return validateQuoteService.getScores(getQuoteService.find(count));
         }
         return null;
+    }
+
+    public Statistics getStatistics(List<Score> score)
+    {
+        return new Statistics(score);
     }
 }
